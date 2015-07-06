@@ -5,6 +5,8 @@ symbolic derivatives in JavaScript.
 
 Demo: <https://rawgit.com/hausen/math.diff.js/master/demo.html>
 
+Suggestions, bug reports and pull requests are welcome!
+
 ## Usage
 
 1. Load the necessary files 
@@ -50,7 +52,7 @@ relying on a server. I tried a couple of JavaScript libraries that
 should do the trick, but they didn't work as expected; to make matters
 worse, they were huge and seemed to be unmaintained.
 
-Also, I was bored and sleepless.
+Also, it was late in the night, I was bored and sleepless.
 
 ## License
 
