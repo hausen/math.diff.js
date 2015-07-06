@@ -24,9 +24,9 @@ var derivative = math.diff(expr, "x");
 
 Arithmetic operations: ``+``, ``-``, ``*``, ``/`` and ``^``.
 
-Functions: ``sin``, ``cos``. For any other function ``f``,
-its derivative will not be explicitly evaluated; instead, it will be
-represented by ``f'``.
+Functions: ``sqrt``, ``log`` (natural logarithm), ``sin``, ``cos``.
+For any other function ``f``, its derivative will not be explicitly
+evaluated; instead, it will be represented by ``f'``.
 
 Constants: ``e`` and ``pi``.
 
@@ -34,12 +34,23 @@ Some trivial simplifications, such as ``2*3*x = 6*x`` are performed.
 
 ### Todo
 
-Implement ``sqrt``, ``log`` and all trigonometric and inverse
-trigonometric functions.
+Implement all trigonometric and inverse trigonometric functions.
+
+Handle multivariable functions.
 
 Improve simplification.
 
 Unit tests.
+
+## Why?
+
+I am teaching a course on numerical analysis and wondered if there was
+a simple way to calculate symbolic derivatives on a web page without
+relying on a server. I tried a couple of JavaScript libraries that
+should do the trick, but they didn't work as expected; to make matters
+worse, they were huge and seemed to be unmaintained.
+
+Also, I was bored and sleepless.
 
 ## License
 

@@ -361,6 +361,21 @@ math.diffCos = function (node, varname) {
   return math.multiplyNodes(dfx, math.unaryMinusNode(math.sinNode(fx)));
 }
 
+math.diffSqrt = function (node, varname) {
+  var fx = math.cloneNode(node.args[0], varname); // f(x)
+  var dfx = math.diff(node.args[0], varname); // f'(x)
+  var sqrtNode = math.funcNode(fx, 'sqrt'); // sqrt(f(x))
+  var denom = math.multiplyNodes(math.getConstantNode(2),
+                                 sqrtNode); // 2*sqrt(f(x))
+  return math.divideNodes(dfx, denom); // f'(x) / (2*sqrt(f(x)))
+}
+
+math.diffLog = function (node, varname) {
+  var fx = math.cloneNode(node.args[0], varname); // f(x)
+  var dfx = math.diff(node.args[0], varname); // f'(x)
+  return math.divideNodes(dfx, fx); // f'(x) / f(x)
+}
+
 math.diffFunc = function (node, varname) {
   // TODO: handle multivariable functions
   var fx = math.cloneNode(node.args[0], varname);
@@ -373,6 +388,10 @@ math.diffFunctionNode = function (node, varname) {
     return math.diffSin(node, varname);
   } else if (node.name == 'cos') {
     return math.diffCos(node, varname);
+  } else if (node.name == 'sqrt') {
+    return math.diffSqrt(node, varname);
+  } else if (node.name == 'log') {
+    return math.diffLog(node, varname);
   } else {
     return math.diffFunc(node, varname);
   }
