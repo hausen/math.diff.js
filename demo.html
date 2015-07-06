@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math.diff.js demo</title>
+  <script
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/1.7.0/math.min.js"
+  ></script>
+  <script src="math.diff.js"></script>
+  <link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"
+   type="text/css">
+  <style>
+    .expr {
+      font-family: "Courier New", monospace;
+    }
+  </style>
+  <script language="javascript">
+    function recalculateDiff() {
+      var variable = document.getElementById('variable').value;
+      if (!variable.match(/^[A-Za-z]/)) {
+        document.getElementById('diff').innerHTML =
+          '<span style="color: red">invalid variable name!</span>';
+        return;
+      }
+      var strExpr = document.getElementById('expr').value;
+      var expr;
+      try {
+        expr = math.parse(strExpr);
+      } catch(err) {
+        document.getElementById('diff').innerHTML =
+          '<span style="color: red">invalid expression: ' + err.message + '</span>';
+        return;
+      }
+      var derivative = math.diff(expr, variable);
+      document.getElementById('diff').innerHTML = derivative.toString();
+    }
+  </script>
+</head>
+<body onload="recalculateDiff()">
+  <h1>Math.diff.js demo</h1>
+
+  <p>Enter the expression you wish to differentiate below.</p>
+
+  <p>
+    Operators: <span class="expr">+</span> ,
+    <span class="expr">-</span> , <span class="expr">*</span>,
+    <span class="expr">^</span> . Constants: <span class="expr">e</span> ,
+    <span class="expr">pi</span> . Functions: <span class="expr">sin</span> ,
+    <span class="expr">cos</span>
+  </p>
+
+  <p><input id="expr" oninput="recalculateDiff()"
+      value="4*x^3 + 3*x^2 + 2*x + 1"
+      class="expr" style="width: 40ch"></p>
+
+  <p>
+    The derivative with respect to
+    <input id="variable" oninput="recalculateDiff()"
+     value="x" class="expr" style="width: 2ch"> is:
+  </p>
+
+  <p id="diff" class="expr">12*x^2 + 6*x + 2</p>
+</body>
+</html>
