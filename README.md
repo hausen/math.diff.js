@@ -57,3 +57,7 @@ Also, it was late in the night, I was bored and sleepless.
 ## License
 
 [GNU Affero Public License v. 3.0](http://www.gnu.org/licenses/agpl-3.0.html)
+
+## Thanks to
+
+[verteu](https://news.ycombinator.com/user?id=verteu)
