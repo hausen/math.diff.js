@@ -294,7 +294,7 @@ math.diffDivide = function (node, varname) {
 
   var num = math.subtractNodes(nodeLeft, nodeRight); // f'(x)*g(x) - f(x)*g'(x)
 
-  fx = math.cloneNode(node.args[0], varname);
+  fx = math.cloneNode(node.args[1], varname);
   var den = math.powNodes(fx, math.getConstantNode(2));
   // (f'(x)*g(x) - f(x)*g'(x)) / (f(x))^2
 
