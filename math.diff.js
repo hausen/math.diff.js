@@ -284,18 +284,19 @@ math.diffMultiply = function (node, varname) {
 }
 
 math.diffDivide = function (node, varname) {
-  var dfx = math.diff(node.args[0], varname);
-  var gx = math.cloneNode(node.args[1], varname);
-  var nodeLeft = math.multiplyNodes(dfx, gx);
+  var dfx = math.diff(node.args[0], varname); // f'(x)
+  var gx = math.cloneNode(node.args[1], varname); // g(x)
+  var nodeLeft = math.multiplyNodes(dfx, gx); // f'(x)*g(x)
 
-  var fx = math.cloneNode(node.args[0], varname);
-  var dgx = math.diff(node.args[1], varname);
-  var nodeRight = math.multiplyNodes(fx, gx);
+  var fx = math.cloneNode(node.args[0], varname); //  f(x)
+  var dgx = math.diff(node.args[1], varname); // g'(x)
+  var nodeRight = math.multiplyNodes(fx, dgx); // f(x)*g'(x)
 
-  var num = math.subtractNodes(nodeLeft, nodeRight);
+  var num = math.subtractNodes(nodeLeft, nodeRight); // f'(x)*g(x) - f(x)*g'(x)
 
   fx = math.cloneNode(node.args[0], varname);
   var den = math.powNodes(fx, math.getConstantNode(2));
+  // (f'(x)*g(x) - f(x)*g'(x)) / (f(x))^2
 
   return math.divideNodes(num, den);
 }
