@@ -26,7 +26,8 @@ var derivative = math.diff(expr, "x");
 
 Arithmetic operations: ``+``, ``-``, ``*``, ``/`` and ``^``.
 
-Functions: ``sqrt``, ``log`` (natural logarithm), ``sin``, ``cos``.
+Functions: ``sqrt``, ``log`` (natural logarithm), ``sin``, ``cos``,
+``tan``, ``sec``, ``csc``, ``cot``.
 For any other function ``f``, its derivative will not be explicitly
 evaluated; instead, it will be represented by ``f'``.
 
@@ -36,7 +37,7 @@ Some trivial simplifications, such as ``2*3*x = 6*x`` are performed.
 
 ### Todo
 
-Implement all trigonometric and inverse trigonometric functions.
+Implement inverse trigonometric functions.
 
 Handle multivariable functions.
 

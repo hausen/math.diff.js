@@ -249,6 +249,60 @@ math.cosNode = function (node) {
   return n;
 }
 
+math.tanNode = function (node) {
+  if (node.type == 'ConstantNode') {
+    var value = math.tan(parseFloat(node.value));
+    var ret = new math.expression.node.ConstantNode(value);
+    ret.isconstant = true;
+    return ret;
+  } else if (node.type == 'SymbolNode' &&
+             node.name == math.differentiation.piName) {
+    return math.getConstantNode(0);
+  } 
+  var n = new math.expression.node.FunctionNode('tan', [node]);
+  n.isconstant = node.isconstant;
+  return n;
+}
+
+math.secNode = function (node) {
+  if (node.type == 'ConstantNode') {
+    var value = math.sec(parseFloat(node.value));
+    var ret = new math.expression.node.ConstantNode(value);
+    ret.isconstant = true;
+    return ret;
+  } else if (node.type == 'SymbolNode' &&
+             node.name == math.differentiation.piName) {
+    return math.getConstantNode(-1);
+  } 
+  var n = new math.expression.node.FunctionNode('sec', [node]);
+  n.isconstant = node.isconstant;
+  return n;
+}
+
+math.cscNode = function (node) {
+  if (node.type == 'ConstantNode') {
+    var value = math.csc(parseFloat(node.value));
+    var ret = new math.expression.node.ConstantNode(value);
+    ret.isconstant = true;
+    return ret;
+  }
+  var n = new math.expression.node.FunctionNode('csc', [node]);
+  n.isconstant = node.isconstant;
+  return n;
+}
+
+math.cotNode = function (node) {
+  if (node.type == 'ConstantNode') {
+    var value = math.cot(parseFloat(node.value));
+    var ret = new math.expression.node.ConstantNode(value);
+    ret.isconstant = true;
+    return ret;
+  }
+  var n = new math.expression.node.FunctionNode('cot', [node]);
+  n.isconstant = node.isconstant;
+  return n;
+}
+
 math.funcNode = function (node, funcname) {
   var n = new math.expression.node.FunctionNode(funcname, [node]);
   n.isconstant = node.isconstant;
@@ -362,6 +416,38 @@ math.diffCos = function (node, varname) {
   return math.multiplyNodes(dfx, math.unaryMinusNode(math.sinNode(fx)));
 }
 
+math.diffTan = function (node, varname) {
+  var fx = math.cloneNode(node.args[0], varname);
+  var dfx = math.diff(node.args[0], varname);
+  var sec = math.powNodes(math.secNode(fx), math.getConstantNode(2));
+
+  return math.multiplyNodes(dfx, sec);
+}
+
+math.diffSec = function (node, varname) {
+  var fx = math.cloneNode(node.args[0], varname);
+  var dfx = math.diff(node.args[0], varname);
+  var sectan = math.multiplyNodes(math.secNode(fx), math.tanNode(fx));
+
+  return math.multiplyNodes(dfx, sectan);
+}
+
+math.diffCsc = function (node, varname) {
+  var fx = math.cloneNode(node.args[0], varname);
+  var dfx = math.diff(node.args[0], varname);
+  var cotcsc = math.multiplyNodes(math.unaryMinusNode(math.cotNode(fx)),
+                                  math.cscNode(fx));
+
+  return math.multiplyNodes(dfx, cotcsc);
+}
+
+math.diffCot = function (node, varname) {
+  var fx = math.cloneNode(node.args[0], varname);
+  var dfx = math.diff(node.args[0], varname);
+  var cot2 = math.powNodes(math.cscNode(fx), math.getConstantNode(2));
+  return math.multiplyNodes(dfx, math.unaryMinusNode(cot2));
+}
+
 math.diffSqrt = function (node, varname) {
   var fx = math.cloneNode(node.args[0], varname); // f(x)
   var dfx = math.diff(node.args[0], varname); // f'(x)
@@ -389,6 +475,14 @@ math.diffFunctionNode = function (node, varname) {
     return math.diffSin(node, varname);
   } else if (node.name == 'cos') {
     return math.diffCos(node, varname);
+  } else if (node.name == 'tan') {
+    return math.diffTan(node, varname);
+  } else if (node.name == 'sec') {
+    return math.diffSec(node, varname);
+  } else if (node.name == 'csc') {
+    return math.diffCsc(node, varname);
+  } else if (node.name == 'cot') {
+    return math.diffCot(node, varname);
   } else if (node.name == 'sqrt') {
     return math.diffSqrt(node, varname);
   } else if (node.name == 'log') {
