@@ -43,6 +43,9 @@ math.setIsConstant = function (node, varname) {
 }
 
 math.cloneNode = function (node, varname) {
+  if (node.type == 'ParenthesisNode') {
+    node = node.content;
+  }
   if (math.differentiation.substituteConstants) {
     if (node.type == 'SymbolNode' &&
         node.name == math.differentiation.piName) {
@@ -519,5 +522,7 @@ math.diff = function (node, varname) {
     return math.diffOperatorNode(node, varname);
   } else if (node.type == 'FunctionNode') {
     return math.diffFunctionNode(node, varname);
+  } else if (node.type == 'ParenthesisNode') {
+    return math.diff(node.content, varname);
   }
 }
