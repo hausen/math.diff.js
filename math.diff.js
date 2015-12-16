@@ -44,7 +44,7 @@ math.setIsConstant = function (node, varname) {
 
 math.cloneNode = function (node, varname) {
   if (node.type == 'ParenthesisNode') {
-    return math.cloneNode(node.content);
+    return math.cloneNode(node.content, varname);
   }
   if (math.differentiation.substituteConstants) {
     if (node.type == 'SymbolNode' &&
